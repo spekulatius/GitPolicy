@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# This git hook calls PHP to process the pushed references, if required.
+#
+# See https://github.com/spekulatius/GitPolicy
+
+while read local_ref local_sha remote_ref remote_sha
+do
+	# uncomment this for debugging:
+	# echo "
+	# 	--local_ref $local_ref
+	# 	--local_sha $local_sha
+	# 	--remote_ref $remote_ref
+	# 	--remote_sha $remote_sha
+	# \n";
+
+	# go through the usual paths and run the first one you find...
+	if [ -f ./analyser ]
+	then
+		./analyser --local_ref "$local_ref" --local_sha "$local_sha" --remote_ref "$remote_ref" --remote_sha "$remote_sha"
+	fi
+	if [ -f ./vendor/spekulatius/gitpolicy/analyser ]
+	then
+		./vendor/spekulatius/gitpolicy/analyser --local_ref "$local_ref" --local_sha "$local_sha" --remote_ref "$remote_ref" --remote_sha "$remote_sha"
+	fi
+	if [ -f ~/.composer/vendor/spekulatius/gitpolicy/analyser ]
+	then
+		~/.composer/vendor/spekulatius/gitpolicy/analyser --local_ref "$local_ref" --local_sha "$local_sha" --remote_ref "$remote_ref" --remote_sha "$remote_sha"
+	fi
+
+	# End the execution if the validation failed.
+	# There must be a better way to do this. How do you exit with a non-zero state from a PHP app inside a git hook?
+	if [ -f ./.tmp-endgp ]
+	then
+		rm './.tmp-endgp';
+		exit 1;
+	fi
+done
+
+exit 0

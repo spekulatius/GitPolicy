@@ -1,0 +1,23 @@
+#
+# DO NOT USE!
+#
+# This file is used for testing - its not suppost to be used as a real-life use case!
+#
+tag:
+  forbidden:
+    tag: 'We do not use tags in this project!'
+    create: 'GoCD creates the tags on merge... Why do you want to create one?'
+    update: 'Why would you try to overwrite a tag?'
+    delete: 'Please do not delete tags from the server :('
+  name:
+    forbidden:
+      '2.0.0': 'This release should not be pushed - do not do this'
+    forbidden_patterns:
+      '/[\\\/]/': 'Please do not use any slashes or backslashes in tags.'
+      '/^2.3/': 'We agreed to not release version 2.3 until next month.'
+    required_patterns:
+      '/^[0-9\.]+\.[0-9\.]+\.[0-9\.]+$/': 'A tag needs to be semantic (e.g. 3.3.0)'
+  after_push_messages:
+    tag: 'Please send the release information to the comms team :)'       # tag can be used to allow printing a general message
+    create: 'Please ensure the tag gets deployed via the deployment assistant.'
+    delete: 'Please ensure to re-run the changelog generator.'

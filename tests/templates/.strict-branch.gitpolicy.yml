@@ -1,0 +1,25 @@
+#
+# DO NOT USE!
+#
+# This file is used for testing - its not suppost to be used as a real-life use case!
+#
+branch:
+  forbidden:
+    create: 'Please use the JIRA option to create branches!'
+    delete: 'Why do you delete this branch? Are you sure about this?'
+    refs_different: 'You cant push to a different branch.'
+  name:
+    forbidden:
+      'master': 'You should never push to the master branch.'
+      'development': 'You should not push to development.'
+      'release': 'You should never push to the release branch.'
+    forbidden_patterns:
+      '/[\\\/]/': 'Please do not use any slashes or backslashes in branch names.'
+      '/[^\d\w\-]/': 'Please use only A-Z, 0-9 and - (dash) in your branch names.'
+      '/^\-|\-$/s': 'Please do not start or end the branch name with a - (dash).'
+    required_patterns:
+      '/[\d\w\-]{40}/': 'Please keep the branch name under 40 characters'
+      '/^[0-9]{5}\-/': 'Please provide the ticket number as first part of the branch name :)'
+  messages:
+    create: 'Please open a merge request in GitLab as "WIP:" to discuss the progress of this feature :)'
+    update: 'Remember to update your WIP flag on in GitLab once you are finished :)'

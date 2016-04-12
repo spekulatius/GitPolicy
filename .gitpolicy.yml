@@ -1,0 +1,38 @@
+tag:
+  forbidden:
+    # tag: 'We do not use tags in this project!'
+    # create: 'GoCD creates the tags on merge... Why do you want to create one?'
+    update: 'Why would you try to overwrite a tag?'
+    delete: 'Please do not delete tags from the server :('
+  name:
+    forbidden:
+      '2.0.0': 'This release should not be pushed - yet'
+    forbidden_patterns:
+      '/[\\\/]/': 'Please do not use any slashes or backslashes in tags.'
+      '/^2.3/': 'We agreed to not release version 2.3 until next month.'
+    required_patterns:
+      '/^[0-9\.]+\.[0-9\.]+\.[0-9\.]+$/': 'A tag needs to be semantic (e.g. 3.3.0)'
+  after_push_messages:
+    tag: 'Please send the release information to the comms team :)'       # tag can be used to allow printing a general message
+    create: 'Please ensure the tag gets deployed via the deployment assistant.'
+    delete: 'Please ensure to re-run the changelog generator.'
+branch:
+  forbidden:
+    # create: 'Please use the JIRA option to create branches!'
+    # delete: 'Why do you plan to delete this branch? Are you sure about this?'
+    refs_different: 'You can not push to a different branch.'
+  name:
+    forbidden:
+      'master': 'You should never push to the master branch.'
+      'development': 'You should not push to development.'
+      'release': 'You should never push to the release branch.'
+    forbidden_patterns:
+      '/[\\\/]/': 'Please do not use any slashes or backslashes in the branch names.'
+      '/[^\d\w\-]/': 'Please use only A-Z, 0-9 and - (dash) in your branch names.'
+      '/^\-|\-$/s': 'Please do not start or end the branch name with a - (dash).'
+    required_patterns:
+      # '/[\d\w\-]{40}/': 'Please keep the branch name under 40 characters'
+      # '/^[0-9]{5}\-/': 'Please provide the ticket number as first part of the branch name :)'
+  messages:
+    create: 'Please open a merge request in GitLab as "WIP:" to discuss the progress of this feature :)'
+    update: 'Remember to update your WIP flag on in GitLab once you are finished :)'

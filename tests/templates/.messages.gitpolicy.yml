@@ -1,0 +1,17 @@
+#
+# DO NOT USE!
+#
+# This file is used for testing - it's not supposed to be used as a real-life use case!
+#
+tag:
+  after_push_messages:
+    tag: 'custom-message-tag-tag'
+    create: 'custom-message-tag-create'
+    update: 'custom-message-tag-update'
+    delete: 'custom-message-tag-delete'
+branch:
+  after_push_messages:
+    branch: 'custom-message-branch-branch'
+    create: 'custom-message-branch-create'
+    update: 'custom-message-branch-update'
+    delete: 'custom-message-branch-delete'

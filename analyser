@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+
+// set to run a long time, just in case.
+set_time_limit(600);
+
+// unfortunately we won't support old PHP versions.
+if (!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50400) {
+    fwrite(STDERR, "GitPolicy requires PHP 5.4.0\n");
+    exit(1);
+}
+
+// installed via composer?
+if (file_exists(__DIR__.'/../../autoload.php')) {
+    require_once __DIR__.'/../../autoload.php';
+} else {
+    require_once __DIR__.'/vendor/autoload.php';
+}
+
+// run the actual application
+$application = new \GitPolicy\Application\GitPolicyAnalyser();
+$application->run();
