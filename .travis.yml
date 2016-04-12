@@ -24,4 +24,4 @@ matrix:
     - php: 7.0
 
 script:
-  - vendor/bin/phpunit tests/
+  - /vendor/bin/phpunit tests/
