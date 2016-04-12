@@ -2,6 +2,7 @@
 
 /**
  * Extend to expose: The way the GitPolicyAnalyser is built this class is required to expose all internals.
+ *
  * Mainly we mock the input and expose the methods and outputs.
  */
 class GitPolicyAnalyserMock extends \GitPolicy\Application\GitPolicyAnalyser {
@@ -176,28 +177,14 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensure this world is following the same logic ;)
+     * simulates a new tag being pushed
+     *
      */
-    public function testBasics()
-    {
-        // just to be sure - you can never change the answer ;)
-        $answer = 42;
-        $this->assertEquals(
-            $answer,
-            array_pop(array_filter([(84 / 2)], function ($try) use ($answer) { return $try === $answer; }))
-        );
-    }
-
-    /**
- * simulates a new tag being pushed
-*
-*/
     public function testCreateGitTag()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -206,7 +193,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '0000000000000000000000000000000000000000',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly
         $this->verifyStates(
@@ -214,21 +201,19 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             ['tag', 'create'],
             ['branch', 'update', 'delete']
         );
-                
     }
 
     /**
- * simulates a existing tag being overwritten
-*
-* should not be a problem ever - git blocks it.
-*
-*/
+     * simulates a existing tag being overwritten
+     *
+     * should not be a problem ever - git blocks it.
+     *
+     */
     public function testUpdateGitTag()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -237,7 +222,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly
         $this->verifyStates(
@@ -245,19 +230,17 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             ['tag', 'update'],
             ['branch', 'create', 'delete']
         );
-                
     }
 
     /**
- * Simulates the delete of a tag on a remote
-*
-*/
+     * Simulates the delete of a tag on a remote
+     *
+     */
     public function testDeleteGitTag()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -266,7 +249,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly
         $this->verifyStates(
@@ -274,19 +257,17 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             ['tag', 'delete'],
             ['branch', 'create', 'update']
         );
-                
     }
 
     /**
- * simulates a new branch being pushed
-*
-*/
+     * simulates a new branch being pushed
+     *
+     */
     public function testCreateGitBranch()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -295,7 +276,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '0000000000000000000000000000000000000000',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly
         $this->verifyStates(
@@ -303,19 +284,17 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             ['branch', 'create'],
             ['tag', 'update', 'delete']
         );
-                
     }
 
     /**
- * simulated a branching being updated
-*
-*/
+     * simulated a branching being updated
+     *
+     */
     public function testUpdateGitBranch()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -324,7 +303,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly
         $this->verifyStates(
@@ -332,19 +311,17 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             ['branch', 'update'],
             ['tag', 'create', 'delete']
         );
-                
     }
 
     /**
- * simulates the deleting of a branch on a remote
-*
-*/
+     * simulates the deleting of a branch on a remote
+     *
+     */
     public function testDeleteGitBranch()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -353,7 +330,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly
         $this->verifyStates(
@@ -361,20 +338,18 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             ['branch', 'delete'],
             ['tag', 'create', 'update']
         );
-                
     }
 
     /**
- * allowed to create new git tag
-*
-* @depends testCreateGitTag
-*/
+     * allowed to create new git tag
+     *
+     * @depends testCreateGitTag
+     */
     public function testTagCreateGood()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -383,7 +358,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '0000000000000000000000000000000000000000',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -398,16 +373,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * forbidden to create new git tag
-*
-* @depends testCreateGitTag
-*/
+     * forbidden to create new git tag
+     *
+     * @depends testCreateGitTag
+     */
     public function testTagCreateBad()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -416,7 +390,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '0000000000000000000000000000000000000000',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -431,16 +405,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * allowed to update new git tag
-*
-* @depends testUpdateGitTag
-*/
+     * allowed to update new git tag
+     *
+     * @depends testUpdateGitTag
+     */
     public function testTagUpdateGood()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -449,7 +422,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -464,16 +437,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * forbidden to update new git tag
-*
-* @depends testUpdateGitTag
-*/
+     * forbidden to update new git tag
+     *
+     * @depends testUpdateGitTag
+     */
     public function testTagUpdateBad()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -482,7 +454,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -497,16 +469,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * allowed to delete git tag
-*
-* @depends testDeleteGitTag
-*/
+     * allowed to delete git tag
+     *
+     * @depends testDeleteGitTag
+     */
     public function testTagDeleteGood()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -515,7 +486,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -530,16 +501,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * forbidden to delete new git tag
-*
-* @depends testDeleteGitTag
-*/
+     * forbidden to delete new git tag
+     *
+     * @depends testDeleteGitTag
+     */
     public function testTagDeleteBad()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -548,7 +518,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -563,16 +533,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * allowed to create new git branch
-*
-* @depends testCreateGitBranch
-*/
+     * allowed to create new git branch
+     *
+     * @depends testCreateGitBranch
+     */
     public function testBranchCreateGood()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -581,7 +550,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '0000000000000000000000000000000000000000',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -596,16 +565,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * forbidden to create new git branch
-*
-* @depends testCreateGitBranch
-*/
+     * forbidden to create new git branch
+     *
+     * @depends testCreateGitBranch
+     */
     public function testBranchCreateBad()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -614,7 +582,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '0000000000000000000000000000000000000000',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -629,16 +597,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * allowed to update new git branch
-*
-* @depends testUpdateGitBranch
-*/
+     * allowed to update new git branch
+     *
+     * @depends testUpdateGitBranch
+     */
     public function testBranchUpdateGood()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -647,7 +614,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -662,16 +629,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * forbidden to update new git branch
-*
-* @depends testUpdateGitBranch
-*/
+     * forbidden to update new git branch
+     *
+     * @depends testUpdateGitBranch
+     */
     public function testBranchUpdateBad()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -680,7 +646,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -695,16 +661,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * allowed to delete git branch
-*
-* @depends testDeleteGitBranch
-*/
+     * allowed to delete git branch
+     *
+     * @depends testDeleteGitBranch
+     */
     public function testBranchDeleteGood()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -713,7 +678,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -728,16 +693,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * forbidden to delete new git branch
-*
-* @depends testDeleteGitBranch
-*/
+     * forbidden to delete new git branch
+     *
+     * @depends testDeleteGitBranch
+     */
     public function testBranchDeleteBad()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -746,7 +710,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -761,16 +725,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * allowed to create new git tag with partial config
-*
-* @depends testCreateGitTag
-*/
+     * allowed to create new git tag with partial config
+     *
+     * @depends testCreateGitTag
+     */
     public function testPartialConfigTagCreateGood()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -779,7 +742,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '0000000000000000000000000000000000000000',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -794,16 +757,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * forbidden to create new git tag with partial config
-*
-* @depends testCreateGitTag
-*/
+     * forbidden to create new git tag with partial config
+     *
+     * @depends testCreateGitTag
+     */
     public function testPartialConfigTagCreateBad()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -812,7 +774,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '0000000000000000000000000000000000000000',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -827,16 +789,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * allowed to update new git tag with partial config
-*
-* @depends testUpdateGitTag
-*/
+     * allowed to update new git tag with partial config
+     *
+     * @depends testUpdateGitTag
+     */
     public function testPartialConfigTagUpdateGood()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -845,7 +806,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -860,16 +821,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * forbidden to update new git tag with partial config
-*
-* @depends testUpdateGitTag
-*/
+     * forbidden to update new git tag with partial config
+     *
+     * @depends testUpdateGitTag
+     */
     public function testPartialConfigTagUpdateBad()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -878,7 +838,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -893,16 +853,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * allowed to delete git tag with partial config
-*
-* @depends testDeleteGitTag
-*/
+     * allowed to delete git tag with partial config
+     *
+     * @depends testDeleteGitTag
+     */
     public function testPartialConfigTagDeleteGood()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -911,7 +870,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -926,16 +885,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * forbidden to delete new git tag with partial config
-*
-* @depends testDeleteGitTag
-*/
+     * forbidden to delete new git tag with partial config
+     *
+     * @depends testDeleteGitTag
+     */
     public function testPartialConfigTagDeleteBad()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -944,7 +902,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -959,16 +917,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * allowed to create new git branch with partial config
-*
-* @depends testCreateGitBranch
-*/
+     * allowed to create new git branch with partial config
+     *
+     * @depends testCreateGitBranch
+     */
     public function testPartialConfigBranchCreateGood()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -977,7 +934,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '0000000000000000000000000000000000000000',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -992,16 +949,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * forbidden to create new git branch with partial config
-*
-* @depends testCreateGitBranch
-*/
+     * forbidden to create new git branch with partial config
+     *
+     * @depends testCreateGitBranch
+     */
     public function testPartialConfigBranchCreateBad()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -1010,7 +966,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '0000000000000000000000000000000000000000',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -1025,16 +981,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * allowed to update new git branch with partial config
-*
-* @depends testUpdateGitBranch
-*/
+     * allowed to update new git branch with partial config
+     *
+     * @depends testUpdateGitBranch
+     */
     public function testPartialConfigBranchUpdateGood()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -1043,7 +998,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -1058,16 +1013,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * forbidden to update new git branch with partial config
-*
-* @depends testUpdateGitBranch
-*/
+     * forbidden to update new git branch with partial config
+     *
+     * @depends testUpdateGitBranch
+     */
     public function testPartialConfigBranchUpdateBad()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -1076,7 +1030,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -1091,16 +1045,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * allowed to delete git branch with partial config
-*
-* @depends testDeleteGitBranch
-*/
+     * allowed to delete git branch with partial config
+     *
+     * @depends testDeleteGitBranch
+     */
     public function testPartialConfigBranchDeleteGood()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -1109,7 +1062,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -1124,16 +1077,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * forbidden to delete new git branch with partial config
-*
-* @depends testDeleteGitBranch
-*/
+     * forbidden to delete new git branch with partial config
+     *
+     * @depends testDeleteGitBranch
+     */
     public function testPartialConfigBranchDeleteBad()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -1142,7 +1094,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -1157,16 +1109,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * checks the "after_push_messages" for creating a git tag
-*
-* @depends testCreateGitTag
-*/
+     * checks the "after_push_messages" for creating a git tag
+     *
+     * @depends testCreateGitTag
+     */
     public function testTagCreateMessage()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -1175,7 +1126,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '0000000000000000000000000000000000000000',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -1198,18 +1149,17 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * checks the 'after_push_messages' for updating a git tag
-*
-* Should never actually happen.
-*
-* @depends testUpdateGitTag
-*/
+     * checks the 'after_push_messages' for updating a git tag
+     *
+     * Should never actually happen.
+     *
+     * @depends testUpdateGitTag
+     */
     public function testTagUpdateMessage()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -1218,7 +1168,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -1241,16 +1191,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * checks the "after_push_messages" for deleting a git tag
-*
-* @depends testDeleteGitTag
-*/
+     * checks the "after_push_messages" for deleting a git tag
+     *
+     * @depends testDeleteGitTag
+     */
     public function testTagDeleteMessage()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -1259,7 +1208,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/tags/1.2.3',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -1282,16 +1231,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * checks the "after_push_messages" for creating a git branch
-*
-* @depends testCreateGitBranch
-*/
+     * checks the "after_push_messages" for creating a git branch
+     *
+     * @depends testCreateGitBranch
+     */
     public function testBranchCreateMessage()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -1300,7 +1248,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '0000000000000000000000000000000000000000',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -1323,16 +1271,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * checks the 'after_push_messages' for updating a git branch
-*
-* @depends testUpdateGitBranch
-*/
+     * checks the 'after_push_messages' for updating a git branch
+     *
+     * @depends testUpdateGitBranch
+     */
     public function testBranchUpdateMessage()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -1341,7 +1288,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -1364,16 +1311,15 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
- * checks the "after_push_messages" for deleting a git branch
-*
-* @depends testDeleteGitBranch
-*/
+     * checks the "after_push_messages" for deleting a git branch
+     *
+     * @depends testDeleteGitBranch
+     */
     public function testBranchDeleteMessage()
     {
-
         // generate an instance of GitPolicyAnalyser using the mock
         $analyser = new GitPolicyAnalyserMock();
-            
+
 
         // set the input
         $analyser->setInputFields([
@@ -1382,7 +1328,7 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
             'remote_sha' => '9876543219876543219876543219876543219876',
             'remote_ref' => 'refs/heads/branch-name',
         ]);
-                
+
 
         // check if there analyser is working correctly (with the right config here)
         $this->runAnalyserBasedOnConfigBasedOnConfig(
@@ -1402,6 +1348,5 @@ class GitPolicyAnalyserTest extends \PHPUnit_Framework_TestCase
         $this->assertStringDoesnotContain('custom-message-tag-create', $completeOutput, 'Custom message for tag-create should not be displayed');
         $this->assertStringDoesnotContain('custom-message-tag-update', $completeOutput, 'Custom message for tag-update should not be displayed');
         $this->assertStringDoesnotContain('Stopping', $completeOutput, 'This case should not be stopping.');
-
     }
 }
