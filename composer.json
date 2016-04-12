@@ -14,9 +14,6 @@
     "autoload": {
         "psr-0": {
             "": "src/"
-        },
-        "psr-7": {
-            "": "tests/"
         }
     },
     "minimum-stability": "dev",
