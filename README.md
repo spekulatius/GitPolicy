@@ -1,7 +1,7 @@
 [GitPolicy](https://github.com/spekulatius/gitpolicy)
 ===========
 
-[![Build Status](https://api.travis-ci.org/spekulatius/gitpolicy.svg?branch=master)](https://travis-ci.org/spekulatius/gitpolicy)
+[![Build Status](https://api.travis-ci.org/spekulatius/GitPolicy.svg?branch=master)](https://travis-ci.org/spekulatius/GitPolicy)
 [![Latest Stable Version](https://poser.pugx.org/spekulatius/gitpolicy/version.svg)](https://github.com/spekulatius/gitpolicy/releases)
 [![Latest Unstable Version](https://poser.pugx.org/spekulatius/gitpolicy/v/unstable.svg)](https://packagist.org/packages/spekulatius/gitpolicy)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/spekulatius/gitpolicy.svg)](https://scrutinizer-ci.com/g/spekulatius/gitpolicy?branch=master)
