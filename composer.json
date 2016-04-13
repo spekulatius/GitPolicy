@@ -3,7 +3,7 @@
     "description": "Assists your developers and contributors with sensible git usage",
     "license": "BSD-3-Clause",
     "require": {
-        "php": "^5.4.0",
+        "php": "^5.4.37",
         "symfony/console": "^2.3",
         "symfony/yaml": "^3.0",
         "symfony/event-dispatcher": "^3.0"
