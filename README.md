@@ -19,10 +19,9 @@ Features
 This is the set of features to make your life easier:
 
  * Easy initial set-up combined with installation in one step:
-
-```bash
-gitpolicy init
-```
+  ```bash
+  gitpolicy init
+  ```
 
  * Definition of forbidden actions (e.g. create new tag, push to master) possible.
 
