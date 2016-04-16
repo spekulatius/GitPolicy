@@ -87,9 +87,9 @@ Please see the issue tracker for planned enhancements and the roadmap.
  * 0.1.x:
    * adding tests and bug fixes only
  * 0.2.0:
-   * Providing the ability to manage the default commit message by populating sensible default values
+   * [Providing the ability to manage the default commit message by populating sensible default values](https://github.com/spekulatius/GitPolicy/issues/5)
  * 0.3.0:
-   * MAJOR: verification of commit messages
+   * [MAJOR: verification of commit messages](https://github.com/spekulatius/GitPolicy/issues/6)
 
 
 License
