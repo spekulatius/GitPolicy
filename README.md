@@ -1,5 +1,5 @@
-[GitPolicy](https://github.com/spekulatius/gitpolicy)
-===========
+GitPolicy
+=========
 
 [![Build Status](https://api.travis-ci.org/spekulatius/GitPolicy.svg?branch=master)](https://travis-ci.org/spekulatius/GitPolicy)
 [![Latest Stable Version](https://poser.pugx.org/spekulatius/gitpolicy/version.svg)](https://github.com/spekulatius/gitpolicy/releases)
@@ -8,7 +8,7 @@
 [![Total Downloads](https://poser.pugx.org/spekulatius/gitpolicy/downloads.svg)](https://packagist.org/packages/spekulatius/gitpolicy)
 [![License](https://poser.pugx.org/spekulatius/gitpolicy/license.svg)](https://github.com/spekulatius/gitpolicy/blob/master/license.md)
 
-GitPolicy helps you and your development team follow guidelines for the usage of git. These guidelines can include the usual git commands, as well as naming conventions for branches and tags.
+GitPolicy helps you and your development team follow [guidelines for the usage of git](https://github.com/spekulatius/gitpolicy). These guidelines can include the usual git commands, as well as naming conventions for branches and tags.
 
 *Beta state: This package is still in development. Please be careful and patient if you decide to use it.*
 
@@ -18,10 +18,7 @@ Features
 
 This is the set of features to make your life easier:
 
- * Easy initial set-up combined with installation in one step:
-  ```bash
-  gitpolicy init
-  ```
+ * One command to do everything. See installation.
 
  * Definition of forbidden actions (e.g. create new tag, push to master) possible.
 
@@ -33,47 +30,39 @@ This is the set of features to make your life easier:
 Requirements
 ------------
 
- * Should work on all developer Linux machines with projects using git. Windows systems haven't been tested.
- * PHP 5.4.0
- * [Composer](https://getcomposer.org) for the installation
+This has been developed on a Debian destribution with Linux in mind. It should work on similar platforms. Mac OS: Maybe. Windows? No idea.
+
+The only direct requirement is PHP 5.4.37.
+
+Note: During the installation [Composer](https://getcomposer.org) will be installed and used to manage the dependencies of GitPolicy.
 
 
 Installation
 ------------
 
-The installation can either be global or in the project itself. You don't need to have a PHP project to use this!
+The installation and set up are combined into one single command here for you to run. It will take all needed steps to install, configurature, re-initalize or update to your needs. This is how it works:
 
+1. Change into your project directory.
 
-### Installation for PHP projects
+2. check and run the following command in your project folder:
 
-An installation as a development dependency is enough to start using gitpolicy:
+    ```bash
+    # install or update composer - we need this to manage the dependencies
+    curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer;
 
-```bash
-# install the package:
-composer install spekulatius/gitpolicy dev-master --dev;
-./vendor/spekulatius/gitpolicy/gitpolicy init;
+    # install the package as a global dependency and symlink it.
+    composer install -g spekulatius/gitpolicy;
+    sudo ln -s ~/.composer/vendor/spekulatius/gitpolicy/gitpolicy /usr/local/bin/gitpolicy;
 
-# To ensure this change persists you should commit the composer files to git.
-git add composer.json composer.lock .gitpolicy.yml
-git commit -nm 'MINOR: adding gitpolicy'
-```
+    # run the initial steps, this configures the githook as well as the inital config file.
+    gitpolicy init;
 
-### Installation for non-PHP projects
+    # commit the change
+    git add composer.json composer.lock .gitpolicy.yml;
+    git commit -m 'CHORE: Adding gitpolicy :sunny:'
+    ```
 
-If you are planning to use this tool for non-PHP projects you will need to run the following command to use gitpolicy:
-
-```bash
-curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer;
-composer install -g spekulatius/gitpolicy;
-sudo ln -s ~/.composer/vendor/spekulatius/gitpolicy/gitpolicy /usr/local/bin/gitpolicy;
-```
-
-Then change into your project folder and run:
-
-```
-gitpolicy init
-```
-
+Done :sunglasses:
 
 Configuration
 -------------
@@ -90,10 +79,10 @@ Some .gitpolicy.yml examples:
 More to come! If you want to share your .gitpolicy.yml as an example for a specific use case open a pull request ;)
 
 
-Roadmap and ideas
+[Roadmap and ideas](https://github.com/spekulatius/GitPolicy/issues)
 -----------------
 
-Please see the [issue tracker](https://github.com/spekulatius/GitPolicy/issues) for planned enhancements and the roadmap.
+Please see the issue tracker for planned enhancements and the roadmap.
 
  * 0.1.x:
    * adding tests and bug fixes only
