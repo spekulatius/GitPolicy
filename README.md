@@ -8,7 +8,7 @@ GitPolicy
 [![Total Downloads](https://poser.pugx.org/spekulatius/gitpolicy/downloads.svg)](https://packagist.org/packages/spekulatius/gitpolicy)
 [![License](https://poser.pugx.org/spekulatius/gitpolicy/license.svg)](https://github.com/spekulatius/gitpolicy/blob/master/license.md)
 
-GitPolicy helps you and your development team follow [guidelines for the usage of git](https://github.com/spekulatius/gitpolicy). These guidelines can include the usual git commands, as well as naming conventions for branches and tags.
+GitPolicy helps you and your development team to follow [guidelines for the usage of git](https://github.com/spekulatius/gitpolicy). These guidelines can include several options, see features.
 
 *Beta state: This package is still in development. Please be careful and patient if you decide to use it.*
 
@@ -18,13 +18,15 @@ Features
 
 This is the set of features to make your life easier:
 
- * One command to do everything. See installation.
+ * Define rules to achieve your desired git usage.
 
- * Definition of forbidden actions (e.g. create new tag, push to master) possible.
+  * Forbidden actions (e.g. create new tag, push to master),
 
- * Expectations for the tag / branch naming (e.g. needs to be semantic, needs to start with the ticket number)
+  * Expectations for names of git tags and branches are possible.
 
- * Configuration over one file: .gitpolicy.yml
+  * Support for common conventions like "begins with a ticket numbers" and semantic tags are possible.
+
+ * Simple to configure and install: One command to do install and initial set up. Configuration over one file: .gitpolicy.yml
 
 
 Requirements
@@ -40,11 +42,11 @@ Note: During the installation [Composer](https://getcomposer.org) will be instal
 Installation
 ------------
 
-The installation and set up are combined into one single command here for you to run. It will take all needed steps to install, configurature, re-initalize or update to your needs. This is how it works:
+The installation and set up are combined into one single command for you to run. It will take all of the steps to install, configurature, re-initalize or update GitPolicy. This is how it works:
 
 1. Change into your project directory.
 
-2. check and run the following command in your project folder:
+2. Check and run the following command in your project folder:
 
     ```bash
     # install or update composer - we need this to manage the dependencies
@@ -54,7 +56,7 @@ The installation and set up are combined into one single command here for you to
     composer global require spekulatius/gitpolicy;
     sudo ln -s ~/.composer/vendor/spekulatius/gitpolicy/gitpolicy /usr/local/bin/gitpolicy;
 
-    # run the initial steps, this configures the githook as well as the inital config file.
+    # run the initial steps, this configures the git hook as well as copies the initial config file into your project.
     gitpolicy init;
 
     # commit the change
