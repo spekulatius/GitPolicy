@@ -51,7 +51,7 @@ The installation and set up are combined into one single command here for you to
     curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer;
 
     # install the package as a global dependency and symlink it.
-    composer install -g spekulatius/gitpolicy;
+    composer global require spekulatius/gitpolicy;
     sudo ln -s ~/.composer/vendor/spekulatius/gitpolicy/gitpolicy /usr/local/bin/gitpolicy;
 
     # run the initial steps, this configures the githook as well as the inital config file.
