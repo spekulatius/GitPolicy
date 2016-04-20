@@ -13,7 +13,7 @@ matrix:
 
 before_script:
   - composer self-update || true
-  - composer validate --strict
+  - composer validate
   - composer update
 
 script:
