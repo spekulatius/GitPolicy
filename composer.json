@@ -11,6 +11,11 @@
     "require-dev": {
         "phpunit/phpunit": "^3.0"
     },
+    "autoload": {
+        "psr-0": {
+            "GitPolicy": "src/"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
